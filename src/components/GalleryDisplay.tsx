@@ -18,13 +18,15 @@ interface GalleryDisplayProps {
   photos: Photo[];
   caption?: string;
   showCaptions?: boolean;
+  externalLink?: string;
 }
 
 export default function GalleryDisplay({
   sectionKey,
   photos,
   caption,
-  showCaptions = true
+  showCaptions = true,
+  externalLink
 }: GalleryDisplayProps) {
   // We use a mediaQuery to work out if we are lg breakpoint or more.
   // For lg and up we show thumbnails in the lightbox
@@ -69,6 +71,17 @@ export default function GalleryDisplay({
     return <Typography>No images found for this gallery.</Typography>;
   }
 
+  // Handle click function - either open lightbox or navigate to external link
+  const handleClick = ({ index }: { index: number }) => {
+    if (externalLink) {
+      // Open external link in a new tab
+      window.open(externalLink, '_blank', 'noopener,noreferrer');
+    } else {
+      // Open lightbox
+      setIndex(index);
+    }
+  };
+
   return (
     <>
       {/* Display caption if provided */}
@@ -77,6 +90,11 @@ export default function GalleryDisplay({
           <Typography variant="h6" gutterBottom>
             {caption}
           </Typography>
+          {externalLink && (
+            <Typography variant="body2" color="primary" sx={{ mb: 2 }}>
+              Click any image to view the full photo essay
+            </Typography>
+          )}
         </div>
       )}
 
@@ -89,7 +107,14 @@ export default function GalleryDisplay({
           targetRowHeight={targetHeight}
           spacing={10}
           padding={0}
-          onClick={({ index }) => setIndex(index)}
+          onClick={handleClick}
+          componentsProps={{
+            containerProps: {
+              style: {
+                cursor: externalLink ? 'pointer' : 'zoom-in'
+              }
+            }
+          }}
         />
       ) : (
         <Lightbox

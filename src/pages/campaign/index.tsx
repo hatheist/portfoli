@@ -61,6 +61,13 @@ export default function CampaignPage({ galleries }: InferGetStaticPropsType<type
           aspectRatio="125%"
         />
         
+        <Typography variant="subtitle1" gutterBottom sx={{ mt: 4 }}>Promo Video</Typography>
+        <ResponsiveEmbed 
+          src="https://www.canva.com/design/DAGmiwPIaGU/cSmF-sUUYhBC7m316njkeA/watch?embed" 
+          title="Green and White Collage World NGO Day Instagram Reel Video"
+          aspectRatio="177.7778%"
+        />
+        
         <Typography variant="subtitle1" gutterBottom sx={{ mt: 4 }}>Campaign Blog</Typography>
         <Button 
           variant="contained" 

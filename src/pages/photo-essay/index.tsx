@@ -36,6 +36,9 @@ export default function PhotoEssayPage({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+  // Google Drive link for the Photo Essay as specified in the request
+  const photoEssayLink = "https://drive.google.com/file/d/1STbGrSRvg0BSVGXuivwseYOSnGo-MWHE/view?usp=drive_link";
+
   const handleImageClick = (imgSrc: string) => {
     setSelectedImage(imgSrc);
   };
@@ -68,31 +71,34 @@ export default function PhotoEssayPage({
           photos={photoEssayImages} 
           caption="Muslimah, Beyond the Veil"
           showCaptions={true}
+          externalLink={photoEssayLink}
         />
       ) : (
         <Typography variant="body1">Loading gallery images...</Typography>
       )}
 
-      {/* Lightbox Dialog for clicked images */}
-      <Dialog
-        fullScreen={fullScreen}
-        open={Boolean(selectedImage)}
-        onClose={handleClose}
-        maxWidth="lg"
-      >
-        {selectedImage && (
-          <Box sx={{ position: 'relative', width: '100%', height: '90vh' }}>
-            <Image
-              src={selectedImage}
-              alt="Enlarged view"
-              fill
-              style={{ objectFit: 'contain' }}
-              onClick={handleClose}
-              unoptimized // Since these could be dynamic paths
-            />
-          </Box>
-        )}
-      </Dialog>
+      {/* Lightbox Dialog for clicked images - this is no longer needed with external link */}
+      {!photoEssayLink && (
+        <Dialog
+          fullScreen={fullScreen}
+          open={Boolean(selectedImage)}
+          onClose={handleClose}
+          maxWidth="lg"
+        >
+          {selectedImage && (
+            <Box sx={{ position: 'relative', width: '100%', height: '90vh' }}>
+              <Image
+                src={selectedImage}
+                alt="Enlarged view"
+                fill
+                style={{ objectFit: 'contain' }}
+                onClick={handleClose}
+                unoptimized // Since these could be dynamic paths
+              />
+            </Box>
+          )}
+        </Dialog>
+      )}
     </PortfolioSection>
   );
 } 
